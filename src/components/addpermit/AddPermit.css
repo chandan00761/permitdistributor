@@ -1,0 +1,54 @@
+
+#add-button{
+    display: block;
+    border-radius: 20px;
+    border: none;
+    padding: 0.5em 2em 0.5em 2em;
+    font-family: Tahoma, serif;
+    font-size: 1em;
+    color: #707070;
+    position: absolute;
+    bottom: 1em;
+    right: 0.5em;
+    cursor: pointer;
+    background-color: #FCF078;
+}
+
+#add-button:hover{
+    background-color: #28c7fa;
+    transition-duration: 0.2s;
+}
+
+.container {
+    display: block;
+    width: 40%;
+    position: sticky;
+    position: -webkit-sticky;
+    top:0;
+    z-index: 1;
+    margin-top: 2em;
+    border-radius: 10px;
+    padding: 2em 0.25em 0.25em 2em;
+}
+
+.addPermit{
+    background-color: #E45757;
+}
+
+input, select{
+    height: 2em;
+    width: 50%;
+    display: block;
+    margin-bottom: 2em;
+    font-size: 1em;
+}
+
+select{
+    width: 51%;
+}
+
+body{
+    margin: 0;
+    width: 100%;
+    background-color: #E62A58;
+}

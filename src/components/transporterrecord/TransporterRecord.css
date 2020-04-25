@@ -1,0 +1,22 @@
+
+.permitRecordContainer{
+    text-align: center;
+    border: solid thin #707070;
+}
+
+.permitRecordContainer:first-child{
+    border-left: none !important;
+}
+
+.permitRecordContainer:last-child{
+    border-right: none !important;
+}
+
+.permitRecord{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-bottom: solid #f5eded thin;
+    font-family: "Segoe UI", sans-serif;
+    color: white;
+}

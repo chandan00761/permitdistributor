@@ -1,0 +1,33 @@
+.summary{
+    background-color: #5d5d5a;
+    padding:0 !important;
+    overflow-y:scroll;
+    scrollbar-width:thin;
+}
+.summaryContainer{
+    position: sticky;
+    top: 0;
+    background-color: #3f3b3b !important;
+    font-family: "Trebuchet MS" ,sans-serif;
+    font-weight: lighter;
+    color: #eee;
+    font-size: 1.2em;
+}
+
+.summaryContainer>th{
+    padding: 0.5em;
+}
+
+.tableSummary{
+    border-radius: 10px 10px 0 0 !important;
+    border-top-right-radius: 0 !important;
+}
+.summaryTab{
+    font-family: "Segoe UI", sans-serif;
+    font-size: 1em;
+    text-align: center;
+}
+.summaryTab>td:first-child{
+    text-align: left !important;
+    padding-left: 1em;
+}

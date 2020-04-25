@@ -1,0 +1,26 @@
+.Person{
+    display: block;
+    padding: 1em;
+    width: 90%;
+    border: thin #33691E solid;
+    border-radius: 8px;
+    box-shadow: 0 5px 5px #AED581;
+    cursor: pointer;
+    background-color: #7CB342;
+    margin: auto;
+    height: 30%;
+    color: #212121;
+    font-family: Georgia, sans-serif;
+}
+
+.Person:hover{
+    animation-name: enlarge;
+    animation-duration: 0.2s;
+    margin:0.9em;
+    /*transform: scale(1.05,1.05);*/
+}
+
+@keyframes enlarge {
+    from {margin: 1em}
+    to {margin: 0.9em}
+}
