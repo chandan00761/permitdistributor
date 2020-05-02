@@ -31,3 +31,12 @@
     text-align: left !important;
     padding-left: 1em;
 }
+
+@media screen and (max-width: 750px){
+    .summary{
+        width: 90%;
+    }
+    .resultSetContainer{
+        width: 90% !important;
+    }
+}

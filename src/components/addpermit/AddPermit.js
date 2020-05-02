@@ -1,7 +1,13 @@
 import * as React from "react";
 import "./AddPermit.css"
 
-export default class AddPermit extends React.Component {
+const responsive = {
+    '@media (maxWidth:360px)' :{
+        width : "20px"
+    }
+};
+
+class AddPermit extends React.Component {
 
     constructor() {
         super();
@@ -14,10 +20,6 @@ export default class AddPermit extends React.Component {
             [value]: event.target.value,
         };
     };
-
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return this.props.transporters.length !== nextProps.transporters.length;
-    }
 
     validate = () => {
         const setvalues = Object.keys(this.data);
@@ -43,7 +45,7 @@ export default class AddPermit extends React.Component {
 
     render() {
         return (
-            <div className="container addPermit">
+            <div data-view={this.props.visible.toString()} className="container addPermit">
                 <input defaultValue={"Ranchi"} readOnly={true} onChange={this.storeValue.bind(this, "origin")} type="text"
                        placeholder="origin"/>
                 <select onChange={this.storeValue.bind(this, "destination")}>
@@ -70,8 +72,10 @@ export default class AddPermit extends React.Component {
                                            value={transporter.id}>{transporter.name}</option>
                         })}
                 </select>
-                <button onClick={this.validate} id="add-button">ADD</button>
+                <button style={responsive} onClick={this.validate} id="add-button">ADD</button>
             </div>
         )
     }
 }
+
+export default AddPermit

@@ -4,7 +4,7 @@ import SummeryTab from "./SummeryTab";
 
 function Summery(props){
     return (
-        <div className="container summary">
+        <div data-view={props.visible.toString()} className="container summary">
             <table className="tablePermit tableSummary">
                 <thead>
                 <tr className="summaryContainer">
