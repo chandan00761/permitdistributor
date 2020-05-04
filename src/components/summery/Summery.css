@@ -1,5 +1,5 @@
 .summary{
-    background-color: #5d5d5a;
+    background-color: #FF9142;
     padding:0 !important;
     overflow-y:scroll;
     scrollbar-width:thin;
@@ -7,7 +7,7 @@
 .summaryContainer{
     position: sticky;
     top: 0;
-    background-color: #3f3b3b !important;
+    background-color: #FF4F30 !important;
     font-family: "Trebuchet MS" ,sans-serif;
     font-weight: lighter;
     color: #eee;
@@ -22,7 +22,7 @@
     border-radius: 10px 10px 0 0 !important;
     border-top-right-radius: 0 !important;
 }
-.summaryTab{
+.summaryTab>td{
     font-family: "Segoe UI", sans-serif;
     font-size: 1em;
     text-align: center;

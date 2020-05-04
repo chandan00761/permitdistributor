@@ -41,6 +41,7 @@ class AddPermit extends React.Component {
         } else {
             this.props.onAddClick(this.data);
         }
+
     };
 
     render() {
