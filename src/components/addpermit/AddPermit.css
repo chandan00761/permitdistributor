@@ -53,6 +53,14 @@ body{
     background-color: #E62A58;
 }
 
+div[result="true"]{
+    display: none;
+}
+
+div[result="false"]{
+    display: block;
+}
+
 @media screen and (max-width: 750px){
     div[data-view="true"]{
         display: block;

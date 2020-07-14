@@ -46,7 +46,7 @@ class AddPermit extends React.Component {
 
     render() {
         return (
-            <div data-view={this.props.visible.toString()} className="container addPermit">
+            <div data-view={this.props.visible.toString()} result={this.props.result.toString()} className="container addPermit">
                 <input defaultValue={"Ranchi"} readOnly={true} onChange={this.storeValue.bind(this, "origin")} type="text"
                        placeholder="origin"/>
                 <select onChange={this.storeValue.bind(this, "destination")}>

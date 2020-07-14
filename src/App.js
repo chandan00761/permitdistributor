@@ -10,6 +10,7 @@ class Distributor extends React.Component {
 
     state = {
         visible:0,
+        showResult: false,
         transporter: [
             {
                 id: "0",
@@ -34,6 +35,16 @@ class Distributor extends React.Component {
     };
 
     addPermit = (data) => {
+        /*
+
+            data is received and saved as an object of the format
+            {
+                date : "8:4:2020",
+                destination: "Ranchi",
+​                pref: "AUTO" || "0" || "1" || "2",
+​                vehicle: "5T",
+            }
+        */
         let dist = [];
         let newState = this.state.transporter.slice();
         let assignId = parseInt(data.pref);
@@ -71,21 +82,26 @@ class Distributor extends React.Component {
 
     changeView = (id) => {
         this.setState({visible:id});
-    }
+    };
 
     render() {
         return (
             <div>
-                <div className="topElement">
-                    <AddPermit visible={this.state.visible === 0} onAddClick={this.addPermit} depot={this.state.depot}
+                <div className="topElement" data-result={this.state.showResult.toString()}>
+                    <AddPermit visible={this.state.visible === 0} result={this.state.showResult} onAddClick={this.addPermit} depot={this.state.depot}
                                transporters={this.state.transporter}/>
-                    <Summery visible={this.state.visible === 1} depot={this.state.depot} trasporters={this.state.transporter.map(item => {
+                    <div className="fullscreen" onClick={() => this.setState((prevState) => (
+                        {showResult: !prevState.showResult}
+                    ))}>
+                        {this.state.showResult ? "SHOW CONTROLS" : "SHOW RESULT"}
+                    </div>
+                    <Summery visible={this.state.visible === 1} result={this.state.showResult} depot={this.state.depot} trasporters={this.state.transporter.map(item => {
                         return ([item.abbr, item.invoice.length, item.id])
                     })}/>
                 </div>
                 <div data-view={this.state.visible === 1} className="resultSetContainer">
                     <table className="tablePermit">
-                        <thead className="theadPermit">
+                        <thead className="theadPermit" data-result={this.state.showResult.toString()}>
                         <tr className="labelContainer">
                             {
                                 this.state.transporter.map(transporter => <th

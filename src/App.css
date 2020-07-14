@@ -12,6 +12,10 @@
   top:20.75em;
 }
 
+thead[data-result="true"]{
+  top:1.2rem;
+}
+
 .labelContainer {
   background-color: #FFD615;
 }
@@ -25,6 +29,15 @@
 .resultSetContainer{
   width: 70%;
   margin: 1em auto 5em;
+}
+
+.fullscreen{
+  display: inline-block;
+  position: relative;
+  top: 50%;
+  color: whitesmoke;
+  cursor: pointer;
+  height: min-content;
 }
 
 .resultSet{
@@ -43,8 +56,16 @@
   background-color:#E62A58;
 }
 
+div[data-result="true"]{
+  height: min-content !important;
+}
+
 @media screen and (max-width: 750px){
   .resultSetContainer, .summary{
+    display: none;
+  }
+
+  .fullscreen{
     display: none;
   }
 

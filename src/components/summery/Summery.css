@@ -14,6 +14,10 @@
     font-size: 1.2em;
 }
 
+.truckSummary{
+    font-size: 1em;
+}
+
 .summaryContainer>th{
     padding: 0.5em;
 }
@@ -30,6 +34,14 @@
 .summaryTab>td:first-child{
     text-align: left !important;
     padding-left: 1em;
+}
+
+div[result="true"]{
+    display: none;
+}
+
+div[result="false"]{
+    display: block;
 }
 
 @media screen and (max-width: 750px){
