@@ -14,12 +14,12 @@
     font-size: 1.2em;
 }
 
-.truckSummary{
-    font-size: 1em;
-}
-
 .summaryContainer>th{
     padding: 0.5em;
+}
+
+.truckSummary{
+    font-size: initial;
 }
 
 .tableSummary{

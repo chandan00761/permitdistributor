@@ -6,13 +6,13 @@ function Summery(props){
     return (
         <div data-view={props.visible.toString()} result={props.result.toString()} className="container summary">
             <table className="tablePermit tableSummary">
-                <thead>
-                <tr className="summaryContainer">
+                <thead className="summaryContainer">
+                <tr>
                     <th>Depot</th>
                     {props.trasporters.map(transporter =><th colSpan={3} key={transporter[2]}>{transporter[0]} [{transporter[1]}]</th>)}
                     <th>Total</th>
                 </tr>
-                <tr className="summaryContainer truckSummary">
+                <tr className="truckSummary">
                     <th/>
                     <th>5T</th>
                     <th>9T</th>
