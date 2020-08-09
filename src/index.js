@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Messages from "./components/messages/Messages";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <Messages>
+        <App />
+      </Messages>
   </React.StrictMode>,
   document.getElementById('root')
 );
