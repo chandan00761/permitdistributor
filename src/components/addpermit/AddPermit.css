@@ -35,16 +35,12 @@
     background-color: #E45757;
 }
 
-input, select{
+.addPermit > input, .addPermit > select{
     height: 2em;
-    width: 50%;
+    width: 51%;
     display: block;
     margin-bottom: 2em;
     font-size: 1em;
-}
-
-select{
-    width: 51%;
 }
 
 body{

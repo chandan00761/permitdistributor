@@ -73,7 +73,7 @@ class AddPermit extends React.Component {
                                            value={transporter.id}>{transporter.name}</option>
                         })}
                 </select>
-                <button style={responsive} onClick={this.validate} id="add-button">ADD</button>
+                {this.props.current ? <button style={responsive} onClick={this.validate} id="add-button">ADD</button> : null}
             </div>
         )
     }

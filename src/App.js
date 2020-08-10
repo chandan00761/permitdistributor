@@ -1,5 +1,6 @@
 import * as React from "react";
 import AddPermit from './components/addpermit/AddPermit'
+import DatePicker from "./components/datepicker/DatePicker"
 import TransporterRecord from './components/transporterrecord/TransporterRecord'
 import Summery from './components/summery/Summery'
 import Footer from './components/footer/Footer'
@@ -9,10 +10,16 @@ import DEPOT_NAMES from "./static/depot";
 
 class Distributor extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.date = new Date();
+    }
+
     state = {
         visible: 0,
         showResult: false,
         loading: true,
+        current: true,
         transporter: [
             {
                 id: "0",
@@ -99,9 +106,8 @@ class Distributor extends React.Component {
 
     saveData = () => {
         this.setState({loading: true});
-        const date = new Date();
-        const month = date.getMonth() + 1;
-        const year = date.getFullYear();
+        const month = this.date.getMonth() + 1;
+        const year = this.date.getFullYear();
         Axios.put("/" + year + "/" + month + ".json/", this.state.transporter)
             .then(response => {
                 if(response.status === 200){
@@ -116,15 +122,33 @@ class Distributor extends React.Component {
             .finally(() => this.setState({loading: false}));
     };
 
-    componentDidMount() {
-        const date = new Date();
-        const month = date.getMonth() + 1;
-        const year = date.getFullYear();
-        let newState = [
+    getData = (year, month, auto = true) => {
+        let newState = auto ? [
             ...this.state.transporter
+        ]:  [
+            {
+                id: "0",
+                name: "MS Freight",
+                abbr: "MS",
+                invoice: []
+            },
+            {
+                id: "1",
+                name: "RK Roadlines",
+                abbr: "RK",
+                invoice: []
+            },
+            {
+                id: "2",
+                name: "Bhole Shankar",
+                abbr: "BS",
+                invoice: []
+            }
         ];
-        Axios.get("/" + year + "/" + month + ".json/")
+        const newCurrent = this.date.getMonth() + 1 === month;
+        Axios.get("/" + year + "/" + month + ".json")
             .then(response => {
+                console.log(response);
                 if (response.status === 200 && response.data !== null ){
                     let data = response.data;
                     newState = [];
@@ -146,8 +170,14 @@ class Distributor extends React.Component {
                 console.error(error);
             })
             .finally(() => {
-                this.setState({loading: false, transporter: newState})
+                this.setState({loading: false, transporter: newState, current: newCurrent})
             });
+    };
+
+    componentDidMount() {
+        const month = this.date.getMonth() + 1;
+        const year = this.date.getFullYear();
+        this.getData(year, month);
     }
 
     render() {
@@ -163,16 +193,20 @@ class Distributor extends React.Component {
                     <div className="topElement" data-result={this.state.showResult.toString()}>
                         <AddPermit visible={this.state.visible === 0} result={this.state.showResult}
                                    onAddClick={this.addPermit} depot={this.state.depot}
+                                   current={this.state.current}
                                    transporters={this.state.transporter}/>
-                        <div className="fullscreen" data-view={this.state.visible === 0}
-                             onClick={() => this.setState((prevState) => (
-                            {showResult: !prevState.showResult}
-                        ))}>
-                            {this.state.showResult ? "SHOW CONTROLS" : "SHOW RESULT"}
-                        </div>
-                        <div className="fullscreen" data-view={this.state.visible === 0} onClick={() => this.saveData()}>
-                            SAVE DATA
-                        </div>
+                        <span className="controls">
+                            <div className="fullscreen" data-view={this.state.visible === 0}
+                                 onClick={() => this.setState((prevState) => (
+                                {showResult: !prevState.showResult}
+                            ))}>
+                                {this.state.showResult ? "SHOW CONTROLS" : "SHOW RESULT"}
+                            </div>
+                            <div className="fullscreen" data-view={this.state.visible === 0} onClick={() => this.saveData()}>
+                                SAVE DATA
+                            </div>
+                            <DatePicker visible={this.state.visible === 0} onSelectDate={(year, month) => this.getData(year, month, false) }/>
+                        </span>
                         <Summery visible={this.state.visible === 1} result={this.state.showResult}
                                  depot={this.state.depot}
                                  total={this.state.transporter.reduce((s, t) => s + t.invoice.length, 0)}
