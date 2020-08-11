@@ -148,7 +148,6 @@ class Distributor extends React.Component {
         const newCurrent = this.date.getMonth() + 1 === month;
         Axios.get("/" + year + "/" + month + ".json")
             .then(response => {
-                console.log(response);
                 if (response.status === 200 && response.data !== null ){
                     let data = response.data;
                     newState = [];
@@ -196,7 +195,7 @@ class Distributor extends React.Component {
                                    current={this.state.current}
                                    transporters={this.state.transporter}/>
                         <span className="controls">
-                            <div className="fullscreen" data-view={this.state.visible === 0}
+                            <div className="fullscreen" id="result-control-toggler" data-view={this.state.visible === 0}
                                  onClick={() => this.setState((prevState) => (
                                 {showResult: !prevState.showResult}
                             ))}>

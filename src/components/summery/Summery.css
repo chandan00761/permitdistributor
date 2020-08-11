@@ -48,7 +48,13 @@ div[result="false"]{
     .summary{
         width: 90%;
     }
+
     .resultSetContainer{
         width: 90% !important;
     }
+
+    div[result]{
+        display: none;
+    }
+
 }

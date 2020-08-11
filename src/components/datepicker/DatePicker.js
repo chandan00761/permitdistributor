@@ -11,7 +11,7 @@ class DatePicker extends React.Component {
     loadData = () => {
         let month = this.monthRef.current.value;
         let year = this.yearRef.current.value;
-        this.props.onSelectDate(year, month);
+        this.props.onSelectDate(parseInt(year), parseInt(month));
     };
 
     render() {

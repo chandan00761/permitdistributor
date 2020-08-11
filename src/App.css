@@ -104,12 +104,24 @@ div[data-result="true"]{
 }
 
 @media screen and (max-width: 750px){
+
+  #result-control-toggler{
+    display: none;
+  }
+
   .resultSetContainer, .summary{
     display: none;
+    height: 0;
+    width: 0;
   }
 
   .fullscreen{
     display: none;
+  }
+
+  .container{
+    position: relative;
+    top: auto;
   }
 
   .addPermit{
@@ -117,26 +129,52 @@ div[data-result="true"]{
     width: 90%;
   }
   .topElement{
+    position: relative;
+    top: auto;
     display: flex;
+    height: 100%;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: stretch;
+    overflow: auto;
   }
 
   .topElement>*{
     align-self: center;
+    overflow: auto;
   }
 
   .fullscreen{
     position: initial;
   }
 
+  .controls{
+    margin-bottom: 5rem;
+  }
+
+  footer{
+    z-index: 20;
+    position: fixed;
+    bottom: 0;
+    margin-top: 10rem;
+  }
+
   div[data-view="true"]{
     display: block;
   }
+
   div[data-view="false"]{
     display: none !important;
   }
+
+  div[data-result]{
+    height: min-content !important;
+  }
+
+  thead[data-result]{
+    top:1.2rem;
+  }
+
 }
 
 @media screen and (min-width: 751px){
