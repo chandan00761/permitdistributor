@@ -9,6 +9,7 @@ function TransporterRecord(props) {
                     <div key={index} className="permitRecord">
                         <div>
                             {invoice.destination} - {invoice.vehicle}
+                            <span className="close" onClick={() => props.onDelete(invoice, props.id)} title="delete"> X </span>
                         </div>
                         <div>
                             {invoice.date}

@@ -1,3 +1,10 @@
+/**
+ * AUTHOR : Chandan Mahto
+ * GITHUB : chandanmahto007
+ * Version : 1.1.0
+ * Date of creation : 25-4-2020
+ */
+
 import * as React from "react";
 import AddPermit from './components/addpermit/AddPermit'
 import DatePicker from "./components/datepicker/DatePicker"
@@ -44,16 +51,29 @@ class Distributor extends React.Component {
     };
 
     addPermit = (data) => {
-        /*
-
-            data is received and saved as an object of the format
-            {
-                date : "8:4:2020",
-                destination: "Ranchi",
-​                pref: "AUTO" || "0" || "1" || "2",
-​                vehicle: "5T",
-            }
+        /**
+        *
+        *
+         *    @
         */
+
+        /**
+         * @param data
+         *
+         * Data is received and saved locally in the format.
+         * {
+         *        date : "8:4:2020",
+         *        destination: "Ranchi",
+​        *        pref: "AUTO" || "0" || "1" || "2",
+​        *        vehicle: "5T",
+         * }
+         *
+         * We take into account both the distribution according to destination and number of invoices with each transporter.
+         * Deviation is calculated based on the previous data and new invoice is assigned to that transporter whose
+         * difference in mean and standard deviation is maximum.
+         *
+         * @type {*[]}
+         */
 
         let newTransporterState = [...this.state.transporter];
         let id = parseInt(data.pref);
@@ -72,7 +92,7 @@ class Distributor extends React.Component {
             let mean = dist.reduce((a, b) => a + b, 0) / dist.length;
             let mean2 = dist2.reduce((a, b) => a + b, 0) / dist2.length;
             if (dist.every((val) => val === mean)) {
-                id = Math.floor(Math.random() * dist.length);
+                id = Math.floor(Math.random() * dist.length); // random invoice is assigned if same distribution
             } else {
                 let derivation = dist.map(item => item - mean);
                 let derivation2 = dist2.map(item => item - mean2);
@@ -95,9 +115,32 @@ class Distributor extends React.Component {
         });
 
         newTransporterState[id].invoice.push(data);
-
+        this.props.pushMessage("Permit Added!");
         this.setState({transporter: newTransporterState});
         this.setState(newDepot);
+    };
+
+    deletePermit = (invoice, id) => {
+        /**
+         * Simply removes the permit from the state. Doesn't redistribute the invoices but new invoices are distributed
+         * evenly. Modal confirmation is required to delete the invoice to prevent accidental deletions.
+         */
+        this.props.pushModalAction({
+            message: "Do you want to delete the invoice?",
+            submitText: "DELETE",
+            cancelText: "CANCEL",
+            submit: () => {
+                id = parseInt(id);
+                let temp = [...this.state.transporter];
+                const index = temp[id].invoice.findIndex((elem) => elem === invoice);
+                console.log(id);
+                console.log(temp[id].invoice);
+                temp[id].invoice.splice(index, 1);
+                console.log(temp[id].invoice);
+                this.setState({transporter: temp});
+            },
+            cancel: "CLOSE_MODAL"
+        });
     };
 
     changeView = (id) => {
@@ -105,6 +148,32 @@ class Distributor extends React.Component {
     };
 
     saveData = () => {
+        /**
+         * Saves data to the Firebase realtime database according to Year and month. Only saves data if SAVE DATA link
+         * is clicked.
+         * The database tree is:-
+         *
+         * FIREBASE DATABASE ──────────┐
+         *                             │
+         *                             │
+         *                             ├──── 2020 ─────┐
+         *                             │               │
+         *                             │               │───── January ───── this.state.transporter
+         *                             │               │
+         *                             │               │───── February ───── this.state.transporter
+         *                             │               │
+         *                             │               │───── March ───── this.state.transporter
+         *                             │
+         *                             │
+         *                             │
+         *                             ├──── 2021 ─────┐
+         *                             │               │
+         *                             │               │───── January ───── this.state.transporter
+         *                             │               │
+         *                             │               │───── February ───── this.state.transporter
+         *                             │               │
+         *                             │               │───── March ───── this.state.transporter
+         */
         this.setState({loading: true});
         const month = this.date.getMonth() + 1;
         const year = this.date.getFullYear();
@@ -246,6 +315,8 @@ class Distributor extends React.Component {
                                     this.state.transporter.map(transporter => {
                                         return <TransporterRecord
                                             key={transporter.id}
+                                            id={transporter.id}
+                                            onDelete={(invoice, id) => this.deletePermit(invoice, id)}
                                             values={transporter.invoice}
                                         />
                                     })

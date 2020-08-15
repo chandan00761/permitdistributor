@@ -12,6 +12,11 @@
     border-right: none !important;
 }
 
+.close{
+    float:right;
+    cursor: pointer;
+}
+
 .permitRecord{
     display: flex;
     flex-direction: column;

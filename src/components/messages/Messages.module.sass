@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Recursive:wght@600&display=swap')
+$submit-background-color: #1B5E20
+$cancel-background-color: #b71c1c
 
 .messageContainer
   display: block
@@ -24,3 +26,55 @@
   &:hover
     color: #ff304f
     transition-duration: 200ms
+
+.messageModalContainer
+  display: block
+  position: fixed
+  top: 0
+  width: 100%
+  height: 100%
+  background-color: rgba(0, 0, 0, 0.4)
+  z-index: 300
+
+.messageModalMessage
+  display: block
+  padding: 1rem
+  & > span
+    float: right
+    font-size: 1.2rem
+    cursor: pointer
+
+.messageModal
+  background-color: #eeeeee
+  width: 40%
+  padding: 1rem
+  border-radius: 10px
+  margin: auto
+
+.messageModalButtons
+  display: flex
+  margin-top: 2rem
+  flex-direction: row
+  justify-content: space-evenly
+
+  & > button
+    border: none
+    text-transform: uppercase
+    font-weight: 500
+    border-radius: 8px
+    padding: 0.5rem
+    color: white
+    cursor: pointer
+    font-family: "Roboto", sans-serif
+    &:hover
+      transition-duration: 300ms
+
+  & > button[type="cancel"]
+    background-color: $submit-background-color
+    &:hover
+      background-color: transparentize($submit-background-color, 0.2)
+
+  & > button[type="submit"]
+    background-color: $cancel-background-color
+    &:hover
+      background-color: transparentize($cancel-background-color, 0.2)
