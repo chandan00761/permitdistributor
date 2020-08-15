@@ -52,10 +52,10 @@ class Distributor extends React.Component {
 
     addPermit = (data) => {
         /**
-        *
-        *
+         *
+         *
          *    @
-        */
+         */
 
         /**
          * @param data
@@ -96,7 +96,7 @@ class Distributor extends React.Component {
             } else {
                 let derivation = dist.map(item => item - mean);
                 let derivation2 = dist2.map(item => item - mean2);
-                if (Math.abs(Math.min(...derivation) - Math.min(...derivation2)) > 1 )
+                if (Math.abs(Math.min(...derivation) - Math.min(...derivation2)) > 1)
                     id = derivation2.findIndex(i => i === Math.min(...derivation2));
                 else
                     id = derivation.findIndex(i => i === Math.min(...derivation));
@@ -174,27 +174,35 @@ class Distributor extends React.Component {
          *                             │               │
          *                             │               │───── March ───── this.state.transporter
          */
-        this.setState({loading: true});
         const month = this.date.getMonth() + 1;
         const year = this.date.getFullYear();
-        Axios.put("/" + year + "/" + month + ".json/", this.state.transporter)
-            .then(response => {
-                if(response.status === 200){
-                    this.props.pushMessage("Data Saved");
-                }
-                else this.props.pushMessage("Data Saving failed");
-            })
-            .catch((error) => {
-                this.props.pushMessage("Network Error please check console.");
-                console.error(error);
-            })
-            .finally(() => this.setState({loading: false}));
+        this.props.pushModalAction({
+            message: "You are about to save the data to cloud. This will replace the data already present there and " +
+                "there is no way ot get that data back. Are you sure you want to continue?",
+            submitText: "Continue",
+            cancelText: "Go back",
+            submit: () => {
+                this.setState({loading: true});
+                Axios.put("/" + year + "/" + month + ".json/", this.state.transporter)
+                    .then(response => {
+                        if (response.status === 200) {
+                            this.props.pushMessage("Data Saved");
+                        } else this.props.pushMessage("Data Saving failed");
+                    })
+                    .catch((error) => {
+                        this.props.pushMessage("Network Error please check console.");
+                        console.error(error);
+                    })
+                    .finally(() => this.setState({loading: false}));
+            },
+            cancel: "CLOSE_MODAL"
+        });
     };
 
     getData = (year, month, auto = true) => {
         let newState = auto ? [
             ...this.state.transporter
-        ]:  [
+        ] : [
             {
                 id: "0",
                 name: "MS Freight",
@@ -217,17 +225,16 @@ class Distributor extends React.Component {
         const newCurrent = this.date.getMonth() + 1 === month;
         Axios.get("/" + year + "/" + month + ".json")
             .then(response => {
-                if (response.status === 200 && response.data !== null ){
+                if (response.status === 200 && response.data !== null) {
                     let data = response.data;
                     newState = [];
-                    for (let val in data){
-                        if (!data[val].hasOwnProperty('invoice')){
+                    for (let val in data) {
+                        if (!data[val].hasOwnProperty('invoice')) {
                             newState.push({
                                 ...data[val],
                                 invoice: []
                             })
-                        }
-                        else newState.push(data[val]);
+                        } else newState.push(data[val]);
                     }
                 }
                 if (response.status !== 200)
@@ -266,14 +273,16 @@ class Distributor extends React.Component {
                         <span className="controls">
                             <div className="fullscreen" id="result-control-toggler" data-view={this.state.visible === 0}
                                  onClick={() => this.setState((prevState) => (
-                                {showResult: !prevState.showResult}
-                            ))}>
+                                     {showResult: !prevState.showResult}
+                                 ))}>
                                 {this.state.showResult ? "SHOW CONTROLS" : "SHOW RESULT"}
                             </div>
-                            <div className="fullscreen" data-view={this.state.visible === 0} onClick={() => this.saveData()}>
+                            <div className="fullscreen" data-view={this.state.visible === 0}
+                                 onClick={() => this.saveData()}>
                                 SAVE DATA
                             </div>
-                            <DatePicker visible={this.state.visible === 0} onSelectDate={(year, month) => this.getData(year, month, false) }/>
+                            <DatePicker visible={this.state.visible === 0}
+                                        onSelectDate={(year, month) => this.getData(year, month, false)}/>
                         </span>
                         <Summery visible={this.state.visible === 1} result={this.state.showResult}
                                  depot={this.state.depot}

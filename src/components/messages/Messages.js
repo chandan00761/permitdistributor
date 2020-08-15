@@ -68,17 +68,18 @@ class Messages extends React.Component {
         if (this.state.modalShow && this.state.actions) {
             const action = this.state.actions;
             messageModalComponent = <div className={styles.messageModalContainer}
+                                         ref={this.modalRef}
                                          onClick={(e) => {
-                                             if (e.target !== this.modalRef.current)
+                                             if (e.target === this.modalRef.current)
                                                  this.closeModal();
                                          }}>
-                <div className={styles.messageModal} ref={this.modalRef}>
+                <div className={styles.messageModal}>
+                    <span title="close" onClick={this.closeModal}>X</span>
                     <div className={styles.messageModalMessage}>
                         {action.message}
-                        <span title="close" onClick={this.closeModal}>X</span>
                     </div>
                     <div className={styles.messageModalButtons}>
-                        <button type="submit" onClick={action.submit}>{action.submitText}</button>
+                        <button type="submit" onClick={() => {action.submit(); this.closeModal()}}>{action.submitText}</button>
                         <button type="cancel" onClick={action.cancel === "CLOSE_MODAL" ? this.closeModal: action.cancel}>{action.cancelText}</button>
                     </div>
                 </div>
