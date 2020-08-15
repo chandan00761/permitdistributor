@@ -223,6 +223,7 @@ class Distributor extends React.Component {
             }
         ];
         const newCurrent = this.date.getMonth() + 1 === month;
+        this.setState({loading: true});
         Axios.get("/" + year + "/" + month + ".json")
             .then(response => {
                 if (response.status === 200 && response.data !== null) {
@@ -236,6 +237,7 @@ class Distributor extends React.Component {
                             })
                         } else newState.push(data[val]);
                     }
+                    this.props.pushMessage("Data loaded successfully");
                 }
                 if (response.status !== 200)
                     this.props.pushMessage("Data couldn't be loaded. Please refresh!");
